@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -13,7 +13,39 @@ import TextAplication from '../../Components/TextAplication';
 
 export default function Home() {
   const navigation = useNavigation();
+  const [mesEscolhido, setMesEscolhido] = useState('Janeiro');
+  const [anoEscolhido, setAnoEscolhido] = useState('2021');
 
+  const [receitasDosMeses, setRecietasDosMeses] = useState({
+    2020: {
+      Janeiro: {
+        receita: 300,
+        despesas: 100,
+      },
+      Fevereiro: {
+        receita: 400,
+        despesas: 250,
+      },
+      Março: {
+        receita: 400,
+        despesas: 40,
+      },
+    },
+    2021: {
+      Janeiro: {
+        receita: 800,
+        despesas: 300,
+      },
+      Fevereiro: {
+        receita: 300,
+        despesas: 100,
+      },
+      Março: {
+        receita: 800,
+        despesas: 500,
+      },
+    },
+  });
 
   return(
     <View style={styles.container}>
@@ -28,10 +60,12 @@ export default function Home() {
         </View>
         <View style={styles.balance}>
           <TextAplication size={32} color="#2FFF00" weight="500">
-            R$ 200,00
+            R$ {
+              receitasDosMeses[anoEscolhido][mesEscolhido]['receita'] - receitasDosMeses[anoEscolhido][mesEscolhido]['despesas']
+            },00
           </TextAplication>
           <TextAplication >
-            (Estimado para Abril)
+            ({mesEscolhido} de {anoEscolhido})
           </TextAplication>
         </View>
       </View>
@@ -40,7 +74,10 @@ export default function Home() {
           Ano referente:
         </TextAplication>
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
+          value={anoEscolhido}
+          onValueChange={(value) => {
+            setAnoEscolhido(value);
+          }}
           items={[
             { label: '2019', value: '2019' },
             { label: '2020', value: '2020' },
@@ -53,12 +90,14 @@ export default function Home() {
               padding: 10,
               borderRadius: 5,
               marginTop: 5,
+              color: '#F4F4F4',
             },
             inputAndroid: {
               backgroundColor: '#F4F4F4',
               padding: 10,
               borderRadius: 5,
               marginTop: 5,
+              color: '#F4F4F4',
             }
           }}
         />
@@ -68,20 +107,23 @@ export default function Home() {
           Mês referente:
         </TextAplication>
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
+          value={mesEscolhido}
+          onValueChange={(value) => {
+            setMesEscolhido(value);
+          }}
           items={[
-            { label: 'Janeiro', value: '1' },
-            { label: 'Feveiro', value: '2' },
-            { label: 'Março', value: '3' },
-            { label: 'Abril', value: '4' },
-            { label: 'Maio', value: '5' },
-            { label: 'Junho', value: '6' },
-            { label: 'Julho', value: '7' },
-            { label: 'Agosto', value: '8' },
-            { label: 'Setembro', value: '9' },
-            { label: 'Outubro', value: '10' },
-            { label: 'Novembro', value: '11' },
-            { label: 'Dezembro', value: '12' },
+            { label: 'Janeiro', value: 'Janeiro' },
+            { label: 'Feveiro', value: 'Fevereiro' },
+            { label: 'Março', value: 'Março' },
+            { label: 'Abril', value: 'Abril' },
+            { label: 'Maio', value: 'Maio' },
+            { label: 'Junho', value: 'Junho' },
+            { label: 'Julho', value: 'Julho' },
+            { label: 'Agosto', value: 'Agosto' },
+            { label: 'Setembro', value: 'Setembro' },
+            { label: 'Outubro', value: 'Outubro' },
+            { label: 'Novembro', value: 'Novembro' },
+            { label: 'Dezembro', value: 'Dezembro' },
           ]}
           style={{
             inputIOS: {
@@ -89,12 +131,14 @@ export default function Home() {
               padding: 10,
               borderRadius: 5,
               marginTop: 5,
+              color: '#F4F4F4',
             },
             inputAndroid: {
               backgroundColor: '#F4F4F4',
               padding: 10,
               borderRadius: 5,
               marginTop: 5,
+              color: '#F4F4F4',
             }
           }}
         />
@@ -110,7 +154,7 @@ export default function Home() {
               TOTAL DE RECEITAS
             </TextAplication>
             <TextAplication size={28} weight="500" color="#2FFF00">
-              R$ 800,00
+              R$ {receitasDosMeses[anoEscolhido][mesEscolhido]['receita']},00
             </TextAplication>
           </View>
           <View style={styles.setaBoxRevenue}>
@@ -129,7 +173,7 @@ export default function Home() {
               TOTAL DE DESPESAS
             </TextAplication>
             <TextAplication size={28} weight="500" color="#FF3D00">
-              R$ 600,00
+              R$ {receitasDosMeses[anoEscolhido][mesEscolhido]['despesas']},00
             </TextAplication>
           </View>
           <View style={styles.setaBoxExpenditure}>
