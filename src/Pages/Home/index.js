@@ -23,7 +23,7 @@ export default function Home() {
             Olá,
           </TextAplication> 
           <TextAplication size={20}>
-            Jhoon Batera
+            Jhoon Ribeiro
           </TextAplication>
         </View>
         <View style={styles.balance}>
